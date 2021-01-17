@@ -31,16 +31,14 @@ def statement(dir: t.Dict[str, str]):
             yield '{}.{}'.format(k.replace('/', '.'), value[:len(value)-3])
 
 
-def qualify_extension(statements) -> t.Set:
+def qualify_extension(statements) -> t.Generator:
     """Returns only the set of modules that actually have cogs
     """
-    Extensions = set()
     for module in statements:
         imported = importlib.import_module(module)
         if hasattr(imported, 'setup') and inspect.isfunction(getattr(imported, 'setup')):
-            Extensions.add(module)
+            yield module
 
-    return Extensions
 
 
 EXTENSIONS = qualify_extension(statement(get_files()))

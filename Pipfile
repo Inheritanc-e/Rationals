@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-"discord.py" = {extras = ["voice"], version = "~=1.5.1"}
+"discord.py" = "~=1.6.0"
 pillow = "~=7.2"
 asyncpg = "~=0.21.0"
 bs4 = "~=0.0.1"
@@ -29,7 +29,6 @@ lint = "pre-commit run --all-files"
 precommit = "pre-commit install"
 black = "black --check ."
 flake8 = "python -m flake8"
-
 
 
 [requires]
