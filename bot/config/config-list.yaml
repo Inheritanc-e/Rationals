@@ -1,0 +1,5 @@
+Auto_Config: False
+
+Roles:
+  Boosters:
+    optional: False

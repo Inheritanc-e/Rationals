@@ -1,0 +1,46 @@
+ltServer:
+  ID: 758619609913229352
+  Invite: https://discord.gg/TJUVrzX
+  Name: "The Rationals"
+
+Bot:
+  Id: 758522941406838806
+  Name: "Rationals"
+  Prefix: '|'
+
+Roles:
+  Students: 789898177641054218
+  Helpers: 758624224138493992
+  Moderators: 758622700188074007
+  Founders: 758622614632792065
+  Nitro_Booster: 758628315720056832
+  Advanced_Gate: 783966382181974027
+  Developers: 778242277000085565
+  cooldown: 772363435606147074
+
+Channels:
+  phenomenal_maths: 765485538198552577
+  phenomenal_maths_gate: 780045944506941450
+  developers: 780046028434178099
+  bot_commands: 758619610512621583
+  errors_☠☠: 778125911106519060
+  dev_logs: 778242704076701706
+  announcements: 765468953002508308
+
+  Help_System:
+    how_to_get_help: 772346433482522646
+    math_help_dormant: 772346903807131648
+    science_help_dormant: 772346945813479466
+
+  Logs:
+    user_log: 765795567561211928
+    gate_log: 784088245242822666
+
+Emojis:
+  unknown: "<:unknown:796960206650081331>" 
+  info: "<:info:796960242621480960>" 
+  fastforward_right: "<:fastforward_right:800346510360707122>" 
+  fastforward_left: "<:fastforward_left:800346510414839818>" 
+  forward_right: "<:forward_right:800346510435942420>" 
+  forward_left: "<:forward_left:800346510474084393>" 
+  trash: "<:trash:800381457780441088>" 
