@@ -52,6 +52,10 @@ def redirect_output(channel:int, *bypass_roles:t.Tuple[int]) -> t.Callable:
         if not guild.get_channel(channel):
             raise NotThere(f'Channel with id {channel} could not be found.')
         
+        if any(x.id in bypass_roles for x in ctx.author.roles):
+            logger.info(f'Bypassing on user {str(ctx.author)} on redirecting the output of command {ctx.command}')
+            return True
+        
         logger.info(f'Redirecting the output of {ctx.command} to {guild.get_channel(channel)}')
         redirect_message = await ctx.channel.send(f'{ctx.author.mention} You can find the output of your command in <#{channel}>')
         
@@ -59,6 +63,7 @@ def redirect_output(channel:int, *bypass_roles:t.Tuple[int]) -> t.Callable:
         await redirect_message.delete()
 
         ctx.channel = guild.get_channel(channel) #overwriting ctx.channel to send the output to another channel.
+        
         return True
         
     return commands.check(wrapper)

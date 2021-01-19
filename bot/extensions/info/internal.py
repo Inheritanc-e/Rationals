@@ -18,7 +18,7 @@ from collections import Counter
 
 
 class Internal(commands.Cog):
-    """SOme internal stuff"""
+    """Internal commands for the bot. Shhh"""
 
     def __init__(self, bot):
         self.bot = bot

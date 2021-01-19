@@ -11,7 +11,7 @@ To get a **token**, go to [Discord Developer Portal](https://discord.com/develop
 1. Traditional way: `git clone https://github.com/gurkult/gurkbot.git` or `git clone git@github.com:gurkult/gurkbot.git`.
    Using Github CLI: `gh repo clone gurkult/gurkbot`. Then navigate to the directory `cd gurkbot/`
 2. Create a new branch by `git checkout -b <name of new local branch> main` or `git switch -c <name of new local branch> main`. Make sure the new branch name is related to the feature or the fix you have in mind.
-3. Create a guild and save its id.
+3. Create a guild and save its id. 
 
 4. Create a `.env` file with following contents:
 
@@ -38,4 +38,7 @@ To get a **token**, go to [Discord Developer Portal](https://discord.com/develop
    pipenv run start
 
    ```
-6. Lint and format your code properly (use black or flake8) or `pipenv run lint`, and push changes `git push -u origin <name of new remote branch>`
+
+6. Testin on a server. If Auto_Config in `config-list.yaml` is True then the bot will create the required channels and roles in the server. If it is set to False then you will have to run the `|setup` command in your server to create the roles and channels and sync their ids with the config file.
+
+7. Lint and format your code properly (use black or flake8) or `pipenv run lint`, and push changes `git push -u origin <name of new remote branch>`
