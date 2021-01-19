@@ -24,8 +24,8 @@ class AutoConfig(commands.Cog):
         self.bot = bot
         with open('bot/config/config-list.yaml') as f:
             self.config_list = yaml.safe_load(f)
-            self.auto = self.config_list['Auto-config']
-            self.config_list.pop('Auto-config')
+            self.auto = self.config_list['Auto_Config']
+            self.config_list.pop('Auto_Config')
 
     @property
     def guild_id(self) -> int:

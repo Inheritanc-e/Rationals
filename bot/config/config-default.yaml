@@ -1,4 +1,4 @@
-ltServer:
+Server:
   ID: 758619609913229352
   Invite: https://discord.gg/TJUVrzX
   Name: "The Rationals"
@@ -13,18 +13,19 @@ Roles:
   Helpers: 758624224138493992
   Moderators: 758622700188074007
   Founders: 758622614632792065
+  Admins: 758622655418466305
   Nitro_Booster: 758628315720056832
   Advanced_Gate: 783966382181974027
   Developers: 778242277000085565
   cooldown: 772363435606147074
 
 Channels:
-  phenomenal_maths: 765485538198552577
   phenomenal_maths_gate: 780045944506941450
+  developers_gate: 780046028434178099
   developers: 780046028434178099
   bot_commands: 758619610512621583
-  errors_☠☠: 778125911106519060
-  dev_logs: 778242704076701706
+  errors: 778125911106519060
+  dev_log: 778242704076701706
   announcements: 765468953002508308
 
   Help_System:

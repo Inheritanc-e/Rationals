@@ -12,10 +12,10 @@ WELCOME_MESSAGE = f"""
 
 Thanks for accepting our rules. You can re-read them at <#758619609925550086>. 
 
-Additionally, if you'd like to receive notifications for the announcements we post in <#{Channels().announcements}>
-you can send `|notify` in <#{Channels().bot_commands} at any time to assign yourself the Announcements role.
+Additionally, if you'd like to receive notifications for the announcements we post in <#{Channels.announcements}>
+you can send `|notify` in <#{Channels.bot_commands} at any time to assign yourself the Announcements role.
 
-If you'd like to unsubscribe from the notifications, simply send `|unnotify` in <#{Channels().bot_commands}>
+If you'd like to unsubscribe from the notifications, simply send `|unnotify` in <#{Channels.bot_commands}>
 """
 
 
@@ -28,7 +28,7 @@ class Gates(commands.Cog):
     async def user_join(self, member: discord.Member) -> None:
         """Welcome the user when they join the server and send a message to
         user log channels.""" 
-        user_log = member.guild.get_channel(Logs().user_log)       
+        user_log = member.guild.get_channel(Logs.user_log)       
         
         user_created = member.created_at.strftime("%d %B, %Y")
         user_joined = member.joined_at.strftime("%d %B, %Y")

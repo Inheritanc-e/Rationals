@@ -35,4 +35,4 @@ else:
 
     log.info("All extensions successfully!")
 
-bot.run(Rationals.token, reconnect=True)
+bot.run(Rationals().token, reconnect=True)

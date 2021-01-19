@@ -6,14 +6,14 @@ import importlib
 
 def get_files() -> t.Dict[str, str]:
     """Prepares all the files that are in bot/exts"""
-    folders = [x for x in list(os.walk('bot/exts'))[0][1]]
+    folders = [x for x in list(os.walk('bot/extensions'))[0][1]]
     dirs = {}
 
     # creating a dictonary which contains a list of all the files and subfiles
     # which contain .py in that folder
 
     for f in folders:
-        for sf in list(os.walk(f'bot/exts/{f}')):
+        for sf in list(os.walk(f'bot/extensions/{f}')):
             if '__pycache__'not in sf[0] and '__init__.cpython-38.pyc' not in sf[2]: 
                 dirs[sf[0]] = sf[2]
 
@@ -34,11 +34,13 @@ def statement(dir: t.Dict[str, str]):
 def qualify_extension(statements) -> t.Generator:
     """Returns only the set of modules that actually have cogs
     """
+    Extensions = set()
     for module in statements:
         imported = importlib.import_module(module)
         if hasattr(imported, 'setup') and inspect.isfunction(getattr(imported, 'setup')):
-            yield module
+            Extensions.add(module)
 
+    return Extensions
 
 
 EXTENSIONS = qualify_extension(statement(get_files()))

@@ -31,12 +31,12 @@ class Bot(R):
         """A listerner which is invoked when the bot is ready
         """
         log.info(f'Successfully logged on as {self.user}')
-        dev_log = self.get_channel(Channels().dev_log)
+        dev_log = self.get_channel(Channels.dev_log)
 
         prepare_embed = Embed(description="Connected!",
                               colour=discord.Color.blurple())
         prepare_embed.set_author(
-            name=Rationals.name.title(),
+            name=Rationals().name.title(),
             url="https://www.youtube.com/watch?v=dQw4w9WgXcQ",
             icon_url=self.user.avatar_url
         )

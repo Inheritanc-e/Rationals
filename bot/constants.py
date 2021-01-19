@@ -2,8 +2,8 @@ import logging
 import os
 import yaml
 
-from collections import namedtuple
-from dataclasses import dataclass
+# from dataclasses import dataclass
+from typing import NamedTuple
 from enum import Enum
 
 logger = logging.getLogger(__name__)
@@ -22,17 +22,23 @@ else:
         config = yaml.safe_load(f)
 
 
-@dataclass
-class Server:
+class Getter(dict):
+    """A getter class which allows dotted bheavior in dicts"""
+    
+    def __getattr__(self, key):
+        """Allowing dotted bheavior."""
+        return self[key]
+
+
+class Server(NamedTuple):
     guild_id: int = config['Server']['ID']
-    guild_name: str = config['Guild Name']
+    guild_name: str = config['Server']['Name']
     invite: str = config['Server']['Invite']
 
 
-@dataclass
-class Rationals:
+class Rationals(NamedTuple):
     name: str = config['Bot']['Name']
-    id: int = config['Bot']['ID']
+    id: int = config['Bot']['Id']
     prefix: str = config['Bot']['Prefix']
     token: str = os.getenv('TOKEN')
 
@@ -41,46 +47,30 @@ class Colour(Enum):
     ...
 
 
-Channels = namedtuple(
-    'Channels',
-    [channel.lower() for channel in config['Channels'].keys()],  # type: ignore
-    defaults=(
-                channel for channel in config['Channels'].values()
-                if isinstance(channel, int)
-            ),
-)
-
-Logs = namedtuple(
-    'Logs',
-    [log.lower() for log in config['Channels']['Logs'].keys()],  # type: ignore
-    defaults=(
-        channel for channel in config['Channels']['Logs'].values()
-        if isinstance(channel, int)
-    ),
-
-)
-
-Help_System = namedtuple(
-    'Help_System',
-    [log.lower() for log in config['Channels']['Help_System'].keys()],  # type: ignore
-    defaults=(
-        channel for channel in config['Channels']['Logs'].values()
-        if isinstance(channel, int)
-    ),
-
-)
-
-Roles = namedtuple(
-    'Roles',
-    [role.lower() for role in config['Roles'].keys()],  # type: ignore
-    defaults=iter(config['Roles'].values())
+Channels = Getter(
+    {channel.lower():channel_id for channel,channel_id in config['Channels'].items()
+    if isinstance(channel_id, int)
+    }
 )
 
 
-Emojis = namedtuple(
-    'Emojis',
-    [emoji.lower() for emoji in config['Emojis'].keys()],  # type: ignore
-    defaults=iter(config['Emojis'].values())
+Logs = Getter(
+    {channel.lower():channel_id for channel,channel_id in config['Channels']['Logs'].items()}
+)
+
+
+Help_System = Getter(
+    {channel.lower():channel_id for channel, channel_id in config['Channels']['Help_System'].items()}
+)
+
+
+Roles = Getter(
+    {role.lower():role_id for role, role_id in config['Roles'].items()}
+)
+
+
+Emojis = Getter(
+    {k.lower():v for k,v in config['Emojis'].items()}
 )
 
 STAFF_ROLES = {

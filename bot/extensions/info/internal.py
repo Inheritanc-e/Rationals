@@ -59,7 +59,7 @@ class Internal(commands.Cog):
             ('Sub Commands', subcommands, False)
         ]
 
-        for name, value, value2 in fields:
+        for name, value, _ in fields:
             message_to_send.add_field(name=name, value=value, inline=False)
 
         await ctx.channel.send(embed=message_to_send)
