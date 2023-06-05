@@ -1,79 +1,50 @@
-import logging
-import os
 import yaml
 
-# from dataclasses import dataclass
-from typing import NamedTuple
-from enum import Enum
+import os
 
-logger = logging.getLogger(__name__)
+from collections import namedtuple
 
 
-if os.path.exists('bot/config/config.yaml'):
-    logger.info('Found config.yaml loading the values from there.')
+if not os.path.exists("default-config.yaml"):
+    raise FileNotFoundError("File default-config.yaml does not exist.")
 
-    with open('bot/config/config.yaml') as f:
-        config = yaml.safe_load(f)
-else:
-    logger.info(
-        'Could not find config.yaml trying to load the values from default-config.yaml!')
+with open("default-config.yaml") as f:
+    config = yaml.safe_load(f)
 
-    with open('bot/config/config-default.yaml') as f:
-        config = yaml.safe_load(f)
+class StructuredDict:
+    def __init__(self, args):
+        for key, value in args.items():
+            setattr(self, key, value)
+            
+Server = StructuredDict({
+        "server_name": config['Server']['Name'],
+        "server_id": config['Server']['ID'],
+        "server_invite": config['Server']['Invite'],
+        "staff_roles": tuple(value for key, value in config['Roles'].items() 
+            if key in ['Founders', 'Admins', 'Moderators', 'Helpers']),
+        "moderation_roles": tuple( value for key, value in config['Roles'].items() 
+            if key in ['Founders', 'Admins', 'Moderators'])
+})
 
+Rationals = StructuredDict({
+        "bot_name": config['Bot']['Name'],
+        "bot_id": config['Bot']['ID'],
+        "prefix": config['Bot']['Prefix'],
+        "token": os.getenv("TOKEN")
+})
 
-class Getter(dict):
-    """A getter class which allows dotted bheavior in dicts"""
-    
-    def __getattr__(self, key):
-        """Allowing dotted bheavior."""
-        return self[key]
-
-
-class Server(NamedTuple):
-    guild_id: int = config['Server']['ID']
-    guild_name: str = config['Server']['Name']
-    invite: str = config['Server']['Invite']
-
-
-class Rationals(NamedTuple):
-    name: str = config['Bot']['Name']
-    id: int = config['Bot']['Id']
-    prefix: str = config['Bot']['Prefix']
-    token: str = os.getenv('TOKEN')
-
-
-class Colour(Enum):
-    ...
-
-
-Channels = Getter(
-    {channel.lower():channel_id for channel,channel_id in config['Channels'].items()
-    if isinstance(channel_id, int)
+Database = StructuredDict({
+    "asyncpg_config": {
+        "user": os.environ.get("DB_USER"),
+        "database": os.environ.get("DB_NAME"),
+        "host": os.environ.get("DB_HOST")
     }
-)
+})
 
+Channels = namedtuple('Channels',list(config['Channels'].keys()), defaults=iter(config['Channels'].values()),) 
 
-Logs = Getter(
-    {channel.lower():channel_id for channel,channel_id in config['Channels']['Logs'].items()}
-)
+Staff_Channels = namedtuple('Staff_Channels', list(config['Staff_Channels'].keys()), defaults=iter(config['Staff_Channels'].values()))
 
+Logs = namedtuple('Logs',list(config['Logs'].keys()), defaults=iter(config['Logs'].values()),)
 
-Help_System = Getter(
-    {channel.lower():channel_id for channel, channel_id in config['Channels']['Help_System'].items()}
-)
-
-
-Roles = Getter(
-    {role.lower():role_id for role, role_id in config['Roles'].items()}
-)
-
-
-Emojis = Getter(
-    {k.lower():v for k,v in config['Emojis'].items()}
-)
-
-STAFF_ROLES = {
-    role: role_id for role, role_id in config['Roles'].items()
-    if role in ['Helpers', 'Moderators', 'Founders']
-}
+Roles = namedtuple('Roles',list(config['Roles'].keys()), defaults=iter(config['Roles'].values()))
